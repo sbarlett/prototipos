@@ -1,6 +1,11 @@
-import { Html5Qrcode, QrcodeErrorCallback, QrcodeSuccessCallback } from "html5-qrcode";
-import { useCallback, useEffect, useRef } from "react";
+import {
+  Html5Qrcode,
+  QrcodeErrorCallback,
+  QrcodeSuccessCallback,
+} from "html5-qrcode";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ContainerVideo } from "./styles";
+import Skeleton from "@mui/material/Skeleton";
 
 interface Html5PluginProps {
   fps?: number;
@@ -26,17 +31,16 @@ const Video = (props: Html5PluginProps) => {
   } = props;
 
   const scannerRef = useRef<Html5Qrcode | null>(null);
-
+  const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onError: QrcodeErrorCallback = useCallback((_errorMsg, _errorObj) => {},
   []);
-
 
   useEffect(() => {
     if (scannerRef.current === null) {
       scannerRef.current = new Html5Qrcode(qrcodeRegionId, verbose);
     }
-    
+
     const html5Qrcode = scannerRef.current;
     const container = document.getElementById(qrcodeRegionId);
     if (
@@ -44,12 +48,16 @@ const Video = (props: Html5PluginProps) => {
       html5Qrcode.isScanning === false &&
       container?.innerHTML === ""
     ) {
-      html5Qrcode.start(
-        { facingMode: mode },
-        { fps, aspectRatio, disableFlip, qrbox },
-        qrCodeSuccessCallback,
-        onError
-      );
+      setIsLoading(true);
+      html5Qrcode
+        .start(
+          { facingMode: mode },
+          { fps, aspectRatio, disableFlip, qrbox },
+          qrCodeSuccessCallback,
+          onError
+        )
+        .then(() => setIsLoading(false))
+        .catch(() => setIsLoading(false));
     }
 
     return () => {
@@ -71,7 +79,15 @@ const Video = (props: Html5PluginProps) => {
     onError,
   ]);
 
-  return <ContainerVideo id={qrcodeRegionId}/>;
+  if (isLoading) {
+    <Skeleton
+      animation="pulse"
+      variant="rectangular"
+      width="100%"
+      height={420}
+    />;
+  }
+  return <ContainerVideo id={qrcodeRegionId} />;
 };
 
 export default Video;
