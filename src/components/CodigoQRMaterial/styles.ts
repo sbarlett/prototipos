@@ -13,12 +13,7 @@ export const Modal = styled(Dialog)(({ theme }) => ({
   "& .MuiPaper-root": {
     borderRadius: "20px",
     overflow: "hidden",
-    [theme.breakpoints.up("xs")]: {
-      width: "300px",
-    },
-    [theme.breakpoints.up("sm")]: {
-      width: "600px",
-    },
+    width: "600px",
     [theme.breakpoints.up("lg")]: {
       width: "720px",
     },
