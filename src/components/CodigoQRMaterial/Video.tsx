@@ -33,8 +33,9 @@ const Video = (props: Html5PluginProps) => {
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onError: QrcodeErrorCallback = useCallback((_errorMsg, _errorObj) => {},
-  []);
+  const onError: QrcodeErrorCallback = useCallback((_errorMsg, _errorObj) => {
+    setIsLoading(false);
+  }, []);
 
   useEffect(() => {
     if (scannerRef.current === null) {
@@ -57,7 +58,11 @@ const Video = (props: Html5PluginProps) => {
           onError
         )
         .then(() => setIsLoading(false))
-        .catch(() => setIsLoading(false));
+        .then(() => setIsLoading(false))
+        .catch((error) => {
+          console.error("Failed to start QR scanner:", error);
+          setIsLoading(false);
+        });
     }
 
     return () => {
@@ -79,15 +84,24 @@ const Video = (props: Html5PluginProps) => {
     onError,
   ]);
 
-  if (isLoading) {
-    <Skeleton
-      animation="pulse"
-      variant="rectangular"
-      width="100%"
-      height={420}
-    />;
-  }
-  return <ContainerVideo id={qrcodeRegionId} />;
+  return (
+    <>
+      <ContainerVideo id={qrcodeRegionId} />
+      {isLoading ? (
+        <Skeleton
+          animation="pulse"
+          variant="rectangular"
+          width={"100%"}
+          sx={{
+            height: {
+              xs: '300px',
+              sm: '600px',
+            }
+          }}
+        />
+      ) : null}
+    </>
+  );
 };
 
 export default Video;
