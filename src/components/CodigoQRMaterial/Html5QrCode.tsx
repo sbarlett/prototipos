@@ -50,10 +50,10 @@ const Html5QrCode = () => {
           <CloseIcon />
         </Box>
         <Video
-          fps={80}
+          mode={"environment"}
+          fps={60}
           aspectRatio={1.0}
           qrCodeSuccessCallback={onScanSuccess}
-          mode={"environment"}
         />
       </Modal>
       <Box>
