@@ -36,6 +36,7 @@ const Video = (props: Html5PluginProps) => {
     if (scannerRef.current === null) {
       scannerRef.current = new Html5Qrcode(qrcodeRegionId, verbose);
     }
+    
     const html5Qrcode = scannerRef.current;
     const container = document.getElementById(qrcodeRegionId);
     if (
