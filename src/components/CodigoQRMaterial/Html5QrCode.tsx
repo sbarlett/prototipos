@@ -1,31 +1,11 @@
 import { useRef, useCallback, useState } from "react";
-import { Html5Qrcode, QrcodeSuccessCallback } from "html5-qrcode";
+import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { Box, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import Video from "./Video";
 import { Modal } from "./styles";
 
-interface Html5PluginProps {
-  mode: "user" | "environment";
-  fps: number;
-  qrbox?: number;
-  aspectRatio?: number;
-  disableFlip?: boolean;
-  verbose?: boolean;
-  qrCodeSuccessCallback: QrcodeSuccessCallback;
-}
-
-const Html5QrCode = (props: Html5PluginProps) => {
-  const {
-    fps,
-    qrbox,
-    aspectRatio,
-    disableFlip,
-    verbose = false,
-    mode,
-    qrCodeSuccessCallback,
-  } = props;
-
+const Html5QrCode = () => {
   const [open, setOpen] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
@@ -39,6 +19,14 @@ const Html5QrCode = (props: Html5PluginProps) => {
 
   function handleOpen() {
     setOpen(true);
+  }
+
+  function onScanSuccess(
+    decodedText: string,
+    decodedResult: Html5QrcodeResult
+  ) {
+    // handle the scanned code as you like, for example:
+    console.log(`Resultado del escaneo = ${decodedText}`, decodedResult);
   }
 
   return (
@@ -59,13 +47,10 @@ const Html5QrCode = (props: Html5PluginProps) => {
           <CloseIcon />
         </Box>
         <Video
-          fps={fps}
-          qrbox={qrbox}
-          aspectRatio={aspectRatio}
-          disableFlip={disableFlip}
-          verbose={verbose}
-          mode={mode}
-          qrCodeSuccessCallback={qrCodeSuccessCallback}
+          mode={"user"}
+          fps={40}
+          aspectRatio={1.0}
+          qrCodeSuccessCallback={onScanSuccess}
         />
       </Modal>
     </>

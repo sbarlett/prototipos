@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom/client";
-import ButtonScann from "./components/CodigoQRMaterial/ButtonScann.tsx";
+import Html5QrCode from "./components/CodigoQRMaterial/Html5QrCode.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
-    <ButtonScann />
+  <Html5QrCode />
   // </React.StrictMode>
 );

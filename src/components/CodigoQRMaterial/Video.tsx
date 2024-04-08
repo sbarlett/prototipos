@@ -24,10 +24,14 @@ const Video = (props: Html5PluginProps) => {
     mode,
     qrCodeSuccessCallback,
   } = props;
+
   const scannerRef = useRef<Html5Qrcode | null>(null);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onError: QrcodeErrorCallback = useCallback((_errorMsg, _errorObj) => {},
   []);
+
+
   useEffect(() => {
     if (scannerRef.current === null) {
       scannerRef.current = new Html5Qrcode(qrcodeRegionId, verbose);
