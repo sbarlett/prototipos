@@ -1,11 +1,12 @@
+import Clarity from "@microsoft/clarity";
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import Clarity from "@microsoft/clarity";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
-import { BrowserRouter } from "react-router-dom";
+const projectId = "r9o90anwpm";
 
-// Clarity.init("TU_PROJECT_ID");
+Clarity.init(projectId);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
