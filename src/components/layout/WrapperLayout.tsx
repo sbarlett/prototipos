@@ -9,6 +9,7 @@ function WrapperLayout({ children }: { children: React.ReactNode }) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        width: 500,
       }}
     >
       <Box
