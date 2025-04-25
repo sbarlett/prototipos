@@ -1,8 +1,16 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
-import Html5QrCode from "./components/CodigoQRMaterial/Html5QrCode.tsx";
+// import Clarity from "@microsoft/clarity";
+import App from "./App";
+import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+
+// Clarity.init("TU_PROJECT_ID");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  // <React.StrictMode>
-  <Html5QrCode />
-  // </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
